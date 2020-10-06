@@ -27,9 +27,7 @@ Lain-lain:
 
 3. *#ceklokasi* _Kirim Lokasi anda, terus Reply/Balas dengan Hashtag<#ceklokasi>_
 
-4. *#meme* _<teks atas>_ | _<teks bawah>_
-
-5. *#donasi*
+4. *#donasi*
 
 Hope you have a great day!✨`
 }
