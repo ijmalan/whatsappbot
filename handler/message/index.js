@@ -195,7 +195,7 @@ module.exports = msgHandler = async (client = new Client(), message) => {
         case 'facebook':
             if (args.length !== 1) return client.reply(from, 'Maaf, format pesan salah silahkan periksa menu. [Wrong Format]', id)
             if (!isUrl(url) && !url.includes('facebook.com')) return client.reply(from, 'Maaf, url yang kamu kirim tidak valid. [Invalid Link]', id)
-            await client.reply(from, '_Scraping Metadata..._ \n\nTerimakasih telah menggunakan bot ini, kamu dapat membantu pengembangan bot ini dengan menyawer melalui https://saweria.co/donate/yogasakti atau mentrakteer melalui https://trakteer.id/red-emperor \nTerimakasih.', id)
+            await client.reply(from, '_Scraping Metadata..._ \n\nTerimakasih telah menggunakan bot ini, kamu dapat membantu pengembangan bot ini dengan menyawer melalui https://saweria.co/ijmalan \nTerimakasih.', id)
             downloader.facebook(url).then(async (videoMeta) => {
                 const title = videoMeta.response.title
                 const thumbnail = videoMeta.response.thumbnail
@@ -245,6 +245,21 @@ module.exports = msgHandler = async (client = new Client(), message) => {
             const text = `*CEK LOKASI PENYEBARAN COVID-19*\nHasil pemeriksaan dari lokasi yang anda kirim adalah *${zoneStatus.status}* ${zoneStatus.optional}\n\nInformasi lokasi terdampak disekitar anda:\n${data}`
             client.sendText(from, text)
             break
+        case 'meme':
+            if ((isMedia || isQuotedImage) && args.length >= 2) {
+            const top = arg.split('|')[0]
+            const bottom = arg.split('|')[1]
+            const encryptMedia = isQuotedImage ? quotedMsg : message
+            const mediaData = await decryptMedia(encryptMedia, uaOverride)
+            const getUrl = await uploadImages(mediaData, false)
+            const ImageBase64 = await meme.custom(getUrl, top, bottom)
+            client.sendFile(from, ImageBase64, 'image.png', '', null, true)
+                 .then((serialized) => console.log(`Sukses Mengirim File dengan id: ${serialized} diproses selama ${processTime(t, moment())}`))
+                 .catch((err) => console.error(err))
+            } else {
+                await client.reply(from, 'Tidak ada gambar! Untuk membuka cara penggnaan kirim #menu [Wrong Format]', id)
+          }
+        break    
         // Group Commands (group admin only)
         case 'kick':
             if (!isGroupMsg) return client.reply(from, 'Maaf, perintah ini hanya dapat dipakai didalam grup! [Group Only]', id)
